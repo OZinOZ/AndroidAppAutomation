@@ -1,28 +1,30 @@
-# ---- Never commit real configuration or credentials ----
-config.yaml
-credentials.json
-token.json
-*.secret
-
-# ---- Local output ----
-screenshots/
-logs/
-output/
-*.log
-
-# ---- Local data (keep only data/routes_sample.csv) ----
-routes/*.csv
-data/*.csv
-!data/routes_sample.csv
-
-# ---- Python ----
+# Python
 __pycache__/
 *.py[cod]
 *.egg-info/
+build/
+dist/
+.pytest_cache/
 .venv/
 venv/
 
-# ---- IDE ----
+# IDE
 .idea/
 .vscode/
+.vs/
 .spyproject/
+
+# Secrets & local configuration -- NEVER commit these
+config.yaml
+credentials.json
+token.json
+*.env
+.env
+
+# Runtime data
+workspace/
+screenshots/
+logs/
+routes/*.csv
+!routes/example.csv
+ZZ_*.csv

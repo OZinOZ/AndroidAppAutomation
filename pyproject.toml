@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "appautomation"
+version = "0.1.0"
+description = "Android ride-hailing app automation (Bolt, inDrive, Google Maps) with OCR-based fare extraction."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "GPL-3.0-or-later" }
+dependencies = [
+    "uiautomator2>=3.0",
+    "pandas>=1.5",
+    "PyYAML>=6.0",
+    "opencv-python>=4.7",
+    "numpy>=1.23",
+]
+
+[project.optional-dependencies]
+easyocr = ["easyocr>=1.7"]
+paddle = ["paddleocr>=2.7"]
+tesseract = ["pytesseract>=0.3.10"]
+gmail = [
+    "google-api-python-client",
+    "google-auth-httplib2",
+    "google-auth-oauthlib",
+]
+dev = ["pytest>=7"]
+
+[project.scripts]
+appautomation = "appautomation.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

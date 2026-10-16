@@ -1,11 +1,15 @@
-uiautomator2>=3.0.0
-pandas>=1.5.0
+uiautomator2>=3.0
+pandas>=1.5
 PyYAML>=6.0
-opencv-python>=4.7.0
-numpy>=1.24.0
+opencv-python>=4.7
+numpy>=1.23
 
-# OCR engines - install at least ONE of the following.
-# Preference order: EasyOCR > PaddleOCR > Tesseract.
-easyocr>=1.7.0
-# paddleocr>=2.7.0     # optional alternative
-# pytesseract>=0.3.10  # optional alternative, requires the Tesseract binary
+# --- OCR engine: install at least ONE of the following (only for analysis) ---
+# easyocr>=1.7
+# paddleocr>=2.7
+# pytesseract>=0.3.10
+
+# --- Optional: e-mail notifications through the Gmail API ---
+# google-api-python-client
+# google-auth-httplib2
+# google-auth-oauthlib
