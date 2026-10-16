@@ -82,8 +82,18 @@ AppAutomation/
 ├── routes/example.csv    # sample route list
 ├── config.example.yaml   # copy to config.yaml
 ├── credentials.example.json
-└── docs/GPU_SETUP.md
+└── docs/                 # GPU_SETUP, REQUIREMENTS, DESIGN, TEST_PLAN, MULTI_DEVICE_PLAN
 ```
+
+## Design & process documents
+
+| Document | Contents |
+|----------|----------|
+| [docs/REQUIREMENTS.md](docs/REQUIREMENTS.md) | Requirements spec: user stories, functional / non-functional requirements, acceptance criteria |
+| [docs/DESIGN.md](docs/DESIGN.md) | Design document: module map, key design decisions, data flow, extension points |
+| [docs/TEST_PLAN.md](docs/TEST_PLAN.md) | Test plan: unit → OCR accuracy benchmark, device checklists, system scenarios, CI strategy |
+| [docs/MULTI_DEVICE_PLAN.md](docs/MULTI_DEVICE_PLAN.md) | Proposal: multi-phone / multi-app parallel operation (orchestrator, job definition, phased plan) |
+| [docs/GPU_SETUP.md](docs/GPU_SETUP.md) | EasyOCR GPU setup |
 
 ## Installation
 
