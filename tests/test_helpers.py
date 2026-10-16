@@ -40,7 +40,7 @@ def test_search_price_missing_decimal_point():
     ("BOLT_MEL", "MEL", "MEL", "BOLT"),
     ("SUN_DROPOFF", "SUN", "SUN_DROPOFF", "DEFAULT"),
     ("MEL", "MEL", "MEL", "DEFAULT"),
-    ("TIME_MEL", "TIME_MEL"[:8], "TIME_MEL", "TIME"),
+    ("TIME_MEL", "TIME_MEL", "TIME_MEL", "TIME"),
 ])
 def test_task_names(task, city, path, key):
     assert get_city_path(task) == path
