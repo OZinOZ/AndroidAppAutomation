@@ -1,0 +1,67 @@
+# Copy this file to config.yaml and fill in your own values.
+# config.yaml is git-ignored: never commit real device serials, credentials or API keys.
+
+# Base directory for screenshots/ and logs/ output
+work_base: '.'
+
+# Directory containing <CITY>.csv route files (id, src, dst)
+routes_dir: 'data'
+
+# Path to the adb executable
+adb_path: 'adb'
+
+# Map a phone alias to its ADB serial number.
+# The alias is also used as the device model key for OCR crop ranges below.
+devices:
+  model_a: 'PUT_YOUR_ADB_SERIAL_HERE'
+
+# Per-app selector prefixes used by UiResource.
+# Discover resource ids with `adb shell uiautomator dump` or uiautomator2's
+# `dev.dump_hierarchy()`, then reference the short names in your app modules.
+selector_prefixes:
+  DEMO: '@com.example.ridedemo:id/'
+
+# Optional per-app xpath templates applied when looking elements up by text
+text_xpath:
+  DEMO: "//android.widget.EditText[@content-desc='%s']/android.widget.TextView"
+
+# Screenshot crop regions per device model, consumed by the OCR pipeline.
+# Format: [top, bottom, left, right] in pixels - calibrate for your device.
+# Keys match the screenshot-type codes produced by the capture stage.
+crop_ranges:
+  model_a:
+    D:  [1200, 1330, 50, 710]
+    D2: [680, 1360, 180, 710]
+    DS: [640, 1030, 20, 710]
+    DA: [80, 180, 180, 550]
+    DI: [940, 1320, 20, 710]
+    DR: [700, 1100, 70, 650]
+    U:  [1050, 1260, 360, 710]
+    U2: [860, 1040, 20, 500]
+    U3: [860, 1040, 500, 700]
+    US: [630, 885, 10, 710]
+    UA: [50, 850, 10, 710]
+    UI: [340, 1540, 10, 710]
+    B:  [875, 1070, 500, 690]
+    G:  [1320, 1450, 10, 710]
+    G2: [1020, 1370, 10, 710]
+    GA: [80, 270, 110, 580]
+
+# Morphological kernel size used when binarising crops for Tesseract,
+# keyed by device model (larger screens usually need 3, smaller 1)
+morph_kernel_size:
+  model_a: 1
+
+# Cities used to qualify addresses for search (code -> display name)
+city_map:
+  MEL: 'Melbourne'
+  SYD: 'Sydney'
+
+# State suffix appended to addresses where required (code -> state)
+city_state:
+  MEL: 'VIC'
+  SYD: 'NSW'
+
+# Default service-tier text to select in each app (empty = whatever is default)
+default_selections:
+  demo: ''

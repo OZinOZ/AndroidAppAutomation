@@ -1,0 +1,28 @@
+# ---- Never commit real configuration or credentials ----
+config.yaml
+credentials.json
+token.json
+*.secret
+
+# ---- Local output ----
+screenshots/
+logs/
+output/
+*.log
+
+# ---- Local data (keep only data/routes_sample.csv) ----
+routes/*.csv
+data/*.csv
+!data/routes_sample.csv
+
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# ---- IDE ----
+.idea/
+.vscode/
+.spyproject/
