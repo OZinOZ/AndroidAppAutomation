@@ -33,7 +33,9 @@ main.py                 CLI entry: config -> routes -> capture -> analyse
 |
 `-- apps/
     |-- __init__.py     APP_REGISTRY
-    `-- demo_ride.py    generic example capture module
+    |-- demo_ride.py    generic example capture module
+    |-- bolt.py         real-world example: two-page flow, coordinate fallbacks
+    `-- indrive.py      real-world example: minimal one-page flow
 ```
 
 ## How it works
@@ -96,17 +98,22 @@ never commit device serials, credentials or API keys.
 | `morph_kernel_size` | per-device binarisation kernel for Tesseract |
 | `city_map` / `city_state` | address qualification metadata |
 | `default_selections` | service-tier text offered per app in `--selection` mode |
+| `app_sequence` | which registered apps to run per city (default: `demo`) |
 
 ## Adding a new app
 
 1. Dump the app UI (`adb shell uiautomator dump`) and add its resource-id
    prefix to `selector_prefixes`.
 2. Subclass `core.app.App`, set `app_type` / `package` / `activity` /
-   `suffixes`, and implement `get_info()`. See `apps/demo_ride.py`.
+   `suffixes`, and implement `get_info()`.
 3. Register the class in `apps/__init__.py -> APP_REGISTRY`.
 
 The example module documents the expected flow: launch, dismiss popups,
-enter route, capture, and report success so the runner can retry.
+enter route, capture, and report success so the runner can retry. Two
+real-world modules are included as references: `apps/bolt.py` (multi-page
+flow with optional confirmation dialogs) and `apps/indrive.py` (minimal
+single-screenshot flow), varying in complexity between the generic demo
+and a fully customised target.
 
 ## OCR calibration
 

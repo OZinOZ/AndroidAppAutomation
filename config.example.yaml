@@ -20,6 +20,8 @@ devices:
 # `dev.dump_hierarchy()`, then reference the short names in your app modules.
 selector_prefixes:
   DEMO: '@com.example.ridedemo:id/'
+  BOLT: '@ee.mtakso.client:id/'
+  INDRIVE: '@sinet.startup.inDriver:id/'
 
 # Optional per-app xpath templates applied when looking elements up by text
 text_xpath:
@@ -43,6 +45,8 @@ crop_ranges:
     UA: [50, 850, 10, 710]
     UI: [340, 1540, 10, 710]
     B:  [875, 1070, 500, 690]
+    BI: [700, 1300, 20, 710]
+    IN: [900, 1400, 30, 690]
     G:  [1320, 1450, 10, 710]
     G2: [1020, 1370, 10, 710]
     GA: [80, 270, 110, 580]
@@ -65,3 +69,9 @@ city_state:
 # Default service-tier text to select in each app (empty = whatever is default)
 default_selections:
   demo: ''
+  bolt: ''
+  indrive: ''
+
+# Apps to run per city (key: city code -> list of APP_REGISTRY keys)
+app_sequence:
+  MEL: ['bolt', 'indrive']
