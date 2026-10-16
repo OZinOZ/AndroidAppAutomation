@@ -34,7 +34,7 @@ class RunParams:
     """Everything that identifies one run."""
     config: Config
     phone: str          # alias from config.yaml (lower case)
-    task: str           # e.g. ``BOLT_MEL``, ``MEL``, ``TIME_MEL``
+    task: str           # e.g. ``BOLT_NYC``, ``NYC``, ``TIME_NYC``
     date: str           # label used in file names, e.g. ``0906``
     start: int
     end: int

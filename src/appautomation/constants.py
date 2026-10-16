@@ -15,23 +15,21 @@ MAX_FAIL_THRESHOLD = 3
 # --------------------------------------------------------------------------- #
 #: Short city code -> full city name (used to build search addresses).
 CITY_NAMES: Dict[str, str] = {
-    "MEL": "Melbourne", "SYD": "Sydney", "ADL": "Adelaide", "PER": "Perth",
-    "GLD": "Gold Coast", "CHC": "Christchurch", "BNE": "Brisbane",
-    "AUK": "Auckland", "WLG": "Wellington", "SUN": "Sunshine Coast",
-    "TWB": "Toowoomba", "ACT": "Canberra", "GLN": "Geelong",
+    "NYC": "New York", "LAX": "Los Angeles", "CHI": "Chicago",
+    "SFO": "San Francisco", "HOU": "Houston", "MIA": "Miami",
 }
-#: City code -> Australian state abbreviation.
+#: City code -> US state abbreviation.
 CITY_STATES: Dict[str, str] = {
-    "MEL": "VIC", "SYD": "NSW", "ADL": "SA", "PER": "WA", "BNE": "QLD", "GLD": "QLD",
+    "NYC": "NY", "LAX": "CA", "CHI": "IL", "SFO": "CA", "HOU": "TX", "MIA": "FL",
 }
-#: City code -> country name, for cities outside Australia.
-CITY_COUNTRIES: Dict[str, str] = {
-    "AUK": "New Zealand", "WLG": "New Zealand", "CHC": "New Zealand",
-}
+#: City code -> country name, for cities outside the home country.
+#: All supported cities are domestic; kept for cross-border support (see
+#: ``address_adapt`` in naming.py).
+CITY_COUNTRIES: Dict[str, str] = {}
 
-#: Service suffixes that may follow a city code, e.g. ``SUN_DROPOFF``.
+#: Service suffixes that may follow a city code, e.g. ``MIA_DROPOFF``.
 SERVICES: Tuple[str, ...] = ("MAX", "PICKUP", "DROPOFF", "DELIVER", "XLMAX", "TRAVEL", "SELECT")
-#: App prefixes that may precede a city code, e.g. ``BOLT_MEL``.
+#: App prefixes that may precede a city code, e.g. ``BOLT_NYC``.
 PREFIXES: Tuple[str, ...] = ("BOLT", "INDRIVE", "GOOGLE")
 
 # --------------------------------------------------------------------------- #

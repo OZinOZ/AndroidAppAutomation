@@ -37,21 +37,23 @@ def test_search_price_missing_decimal_point():
 
 
 @pytest.mark.parametrize("task,city,path,key", [
-    ("BOLT_MEL", "MEL", "MEL", "BOLT"),
-    ("SUN_DROPOFF", "SUN", "SUN_DROPOFF", "DEFAULT"),
-    ("MEL", "MEL", "MEL", "DEFAULT"),
-    ("TIME_MEL", "TIME_MEL", "TIME_MEL", "TIME"),
+    ("BOLT_NYC", "NYC", "NYC", "BOLT"),
+    ("MIA_DROPOFF", "MIA", "MIA_DROPOFF", "DEFAULT"),
+    ("NYC", "NYC", "NYC", "DEFAULT"),
+    ("TIME_NYC", "TIME_NYC", "TIME_NYC", "TIME"),
 ])
 def test_task_names(task, city, path, key):
     assert get_city_path(task) == path
     assert get_task_key(task) == key
-    if task != "TIME_MEL":
+    if task != "TIME_NYC":
         assert get_city_name(task) == city
 
 
 def test_address_adapt():
-    assert address_adapt("Fed Sq", "BOLT_MEL") == "VIC,Fed Sq,Melbourne"
-    assert address_adapt("Queen St", "AUK").endswith(",New Zealand")
+    assert address_adapt("Times Square", "BOLT_NYC") == "NY,Times Square,New York"
+    assert address_adapt("Union Square", "SFO").endswith(",San Francisco")
+    # All bundled cities are domestic: no country suffix is appended
+    assert "United States" not in address_adapt("Times Square", "BOLT_NYC")
 
 
 def test_record_range():

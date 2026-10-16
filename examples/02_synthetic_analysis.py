@@ -17,7 +17,7 @@ from appautomation.analysis import ScreenshotAnalyser, ScreenshotParser, create_
 from appautomation.constants import SCREEN_PROFILES
 
 PROFILE = "hd720"
-CITY, DATE = "MEL", "0101"
+CITY, DATE = "NYC", "0101"
 
 with tempfile.TemporaryDirectory() as tmp:
     work = Path(tmp)
@@ -27,7 +27,7 @@ with tempfile.TemporaryDirectory() as tmp:
 
     # 1. a one-route CSV
     (work / "routes" / f"{CITY}.csv").write_text(
-        "id,src,dst\n1,Federation Square,Melbourne Airport\n", encoding="utf-8")
+        "id,src,dst\n1,Times Square,JFK Airport\n", encoding="utf-8")
 
     # 2. a fake 720x1560 screenshot with a price inside Bolt's fare region ("B")
     img = np.full((1560, 720, 3), 255, np.uint8)

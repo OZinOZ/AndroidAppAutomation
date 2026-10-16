@@ -33,14 +33,14 @@ job definition, spawns workers, and aggregates results.
 ```mermaid
 flowchart TB
     FJ[fleet job: fleet.yaml] --> ORCH[orchestrator]
-    ORCH --> W1[worker: phone_a<br/>BOLT_MEL routes 1-50]
-    ORCH --> W2[worker: phone_b<br/>BOLT_MEL routes 51-100]
-    ORCH --> W3[worker: phone_c<br/>INDRIVE_MEL routes 1-100]
+    ORCH --> W1[worker: phone_a<br/>BOLT_NYC routes 1-50]
+    ORCH --> W2[worker: phone_b<br/>BOLT_NYC routes 51-100]
+    ORCH --> W3[worker: phone_c<br/>INDRIVE_NYC routes 1-100]
     W1 --> S1[(screenshots/..._phone_a)]
     W2 --> S2[(screenshots/..._phone_b)]
     W3 --> S3[(screenshots/..._phone_c)]
     ORCH --> MAIL[aggregated summary e-mail]
-    ORCH -.-> MERGE[optional CSV merge: ZZ_MEL_DATE.csv]
+    ORCH -.-> MERGE[optional CSV merge: ZZ_NYC_DATE.csv]
 ```
 
 ## 3. Job definition (fleet.yaml, git-ignored)
@@ -51,21 +51,21 @@ parallelism: 3            # max concurrent workers (<= number of phones)
 
 jobs:
   - phone: phone_a
-    task: BOLT_MEL
+    task: BOLT_NYC
     date: "0000"
     routes: {mode: split, parts: 2, index: 0}   # static partition, part 0/2
   - phone: phone_b
-    task: BOLT_MEL
+    task: BOLT_NYC
     date: "0000"
     routes: {mode: split, parts: 2, index: 1}   # part 1/2
   - phone: phone_c
-    task: INDRIVE_MEL                            # split by app: whole range
+    task: INDRIVE_NYC                            # split by app: whole range
     date: "0000"
 
 analysis:
   mode: central            # central | per-worker | none
   max_workers: 1           # bound OCR memory (EasyOCR model instances)
-merge_csv: true            # concat per-run ZZ CSVs -> ZZ_MEL_DATE.csv
+merge_csv: true            # concat per-run ZZ CSVs -> ZZ_NYC_DATE.csv
 ```
 
 Two splitting strategies cover the real use cases:

@@ -15,9 +15,9 @@ CITY_BY_NAME = {name: code for code, name in CITY_NAMES.items()}
 def get_city_name(task: str) -> str:
     """Return the 3-letter city code embedded in a task name.
 
-    >>> get_city_name("BOLT_MEL")
-    'MEL'
-    >>> get_city_name("SUN_DROPOFF")
+    >>> get_city_name("BOLT_NYC")
+    'NYC'
+    >>> get_city_name("MIA_DROPOFF")
     'SUN'
     """
     parts = task.split("_")
@@ -30,7 +30,7 @@ def get_city_name(task: str) -> str:
 
 
 def get_city_path(task: str) -> str:
-    """Strip an app prefix to get the route-file name (``BOLT_MEL`` -> ``MEL``)."""
+    """Strip an app prefix to get the route-file name (``BOLT_NYC`` -> ``NYC``)."""
     parts = task.split("_")
     if parts[0] in PREFIXES:
         return task[len(parts[0]) + 1:]

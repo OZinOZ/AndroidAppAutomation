@@ -31,7 +31,7 @@ class ScreenshotAnalyser:
     Args:
         parser: Configured :class:`ScreenshotParser`.
         work_base: Workspace root containing ``routes/``.
-        city: Route file name (``MEL`` for ``routes/MEL.csv``).
+        city: Route file name (``NYC`` for ``routes/NYC.csv``).
         date: Date label used in screenshot file names (e.g. ``0906``).
         screenshot_dir: Folder with the screenshots; the CSV is written here too.
         label: Name used in log messages (usually the phone alias).

@@ -143,7 +143,7 @@ it in `phones.<alias>.profile`.
 
 ```csv
 id,src,dst
-1,Federation Square,Melbourne Airport
+1,Times Square,JFK Airport
 2,Queen Victoria Market,Flinders Street Station
 ```
 
@@ -151,7 +151,7 @@ id,src,dst
 [`examples/routes_scheduled.csv`](examples/routes_scheduled.csv).
 
 Addresses are expanded with state/city/country from the city code (`address_adapt`), e.g.
-`Federation Square` + `MEL` → `VIC,Federation Square,Melbourne`.
+`Times Square` + `NYC` → `NY,Times Square,New York`.
 
 ## Usage
 
@@ -177,25 +177,25 @@ appautomation --phone PHONE --city TASK --date DATE --start N --end M [options]
 
 | Task                    | Apps driven (in order) | Analysis |
 |-------------------------|------------------------|----------|
-| `MEL`, `BOLT_MEL`       | Bolt → Google Maps     | yes |
-| `INDRIVE_MEL`           | inDrive                | no (screenshots only) |
-| `GOOGLE_MEL`            | Google Maps            | yes |
-| `TIME_MEL` (file `TIME_MEL.csv`) | Bolt, at each route's `hour:minute` | no |
+| `NYC`, `BOLT_NYC`       | Bolt → Google Maps     | yes |
+| `INDRIVE_NYC`           | inDrive                | no (screenshots only) |
+| `GOOGLE_NYC`            | Google Maps            | yes |
+| `TIME_NYC` (file `TIME_NYC.csv`) | Bolt, at each route's `hour:minute` | no |
 
-City codes (`MEL`, `SYD`, `ADL`, `PER`, `BNE`, `GLD`, `AUK`, `WLG`, …) are defined in
+City codes (`NYC`, `LAX`, `CHI`, `SFO`, `HOU`, `MIA`) are defined in
 [`constants.py`](src/appautomation/constants.py).
 
 ### Typical commands
 
 ```bash
 # record routes 1-10 with Bolt + Google Maps, then analyse
-appautomation --phone phone_a --city BOLT_MEL --date 0000 --start 1 --end 10
+appautomation --phone phone_a --city BOLT_NYC --date 0000 --start 1 --end 10
 
 # only analyse screenshots recorded earlier
-appautomation --phone phone_a --city BOLT_MEL --date 0906 --start 1 --end 10 --analyse
+appautomation --phone phone_a --city BOLT_NYC --date 0906 --start 1 --end 10 --analyse
 
 # record inDrive prices only
-appautomation --phone phone_a --city INDRIVE_MEL --date 0000 --start 1 --end 10
+appautomation --phone phone_a --city INDRIVE_NYC --date 0000 --start 1 --end 10
 ```
 
 ## Output
@@ -204,8 +204,8 @@ appautomation --phone phone_a --city INDRIVE_MEL --date 0000 --start 1 --end 10
 <work_base>/
 ├── logs/<DATE>_<TASK>_<PHONE>.log
 └── screenshots/[time/]<DATE>_<CITY>_<PHONE>/
-    ├── MEL0906001B.png, MEL0906001BI.png, MEL0906001G.png …
-    └── ZZ_MEL_0906.csv          # analysis result
+    ├── NYC0906001B.png, NYC0906001BI.png, NYC0906001G.png …
+    └── ZZ_NYC_0906.csv          # analysis result
 ```
 
 Result columns: `id, date, time, dist, trip, toll, surcharge, surge, price, base, minimum,

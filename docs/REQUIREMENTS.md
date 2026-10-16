@@ -23,7 +23,7 @@ time observations) for analysis and comparison across apps, cities and dates.
 | Term | Meaning |
 |------|---------|
 | Route | One pickup → drop-off pair with a numeric id, stored in a city CSV |
-| Task | `[APP_]CITY[_SERVICE]` name, e.g. `BOLT_MEL`, `TIME_MEL` |
+| Task | `[APP_]CITY[_SERVICE]` name, e.g. `BOLT_NYC`, `TIME_NYC` |
 | Driver | Per-app class that automates one app and produces screenshots |
 | Suffix | Screenshot-type code (`B`, `BI`, `IN`, `G`) linking a PNG to OCR regions |
 | Profile | Named set of pixel crop regions for one screen resolution |
@@ -49,8 +49,8 @@ time observations) for analysis and comparison across apps, cities and dates.
 * FR-1.2 Select an inclusive route range `--start/--end`; with `--partial`,
   restrict to configured route ids (`partial_routes`).
 * FR-1.3 Expand short addresses with state / city / country based on the city
-  code before entering them into app search (e.g. `Fed Sq` + `MEL` →
-  `VIC,Fed Sq,Melbourne`).
+  code before entering them into app search (e.g. `Fed Sq` + `NYC` →
+  `NY,Fed Sq,New York`).
 * FR-1.4 `TIME_*` tasks read per-route `hour,minute` columns and record each
   route at its scheduled time.
 
@@ -120,8 +120,8 @@ time observations) for analysis and comparison across apps, cities and dates.
 ## 7. Acceptance criteria (v2)
 
 1. `pip install -e ".[dev]" && pytest` passes with no device attached.
-2. A full `BOLT_MEL` run over ≥ 20 routes produces ≥ 95% complete screenshot
-   sets and a `ZZ_MEL_<DATE>.csv` with valid `price`, `dist`, `trip` values.
+2. A full `BOLT_NYC` run over ≥ 20 routes produces ≥ 95% complete screenshot
+   sets and a `ZZ_NYC_<DATE>.csv` with valid `price`, `dist`, `trip` values.
 3. A failing app (e.g. logged out) aborts the run within
    `MAX_FAIL_THRESHOLD` routes and sends a failure notification.
 4. `--analyse` on a second machine reproduces the same CSV from the

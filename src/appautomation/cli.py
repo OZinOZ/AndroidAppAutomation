@@ -2,8 +2,8 @@
 
 Examples::
 
-    appautomation --phone phone_a --city BOLT_MEL --date 0000 --start 1 --end 10
-    appautomation --phone phone_a --city MEL --date 0906 --start 1 --end 10 --analyse
+    appautomation --phone phone_a --city BOLT_NYC --date 0000 --start 1 --end 10
+    appautomation --phone phone_a --city NYC --date 0906 --start 1 --end 10 --analyse
 """
 
 from __future__ import annotations
@@ -26,7 +26,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--config", help="path to config.yaml (default: $APPAUTOMATION_CONFIG or ./config.yaml)")
     parser.add_argument("--phone", required=True, help="phone alias defined in config.yaml")
     parser.add_argument("--city", required=True,
-                        help="task / city, e.g. MEL, BOLT_MEL, GOOGLE_SYD, INDRIVE_PER, TIME_MEL")
+                        help="task / city, e.g. NYC, BOLT_NYC, GOOGLE_LAX, INDRIVE_HOU, TIME_NYC")
     parser.add_argument("--date", required=True,
                         help="date label for file names, e.g. 0906 (MMDD); 0000 = today")
     parser.add_argument("--start", type=int, required=True, help="first route id to record")

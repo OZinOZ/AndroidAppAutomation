@@ -22,7 +22,7 @@ if dev is None:
 device.wake_and_unlock(dev)
 
 for app_cls in (Google, Bolt):
-    app = app_cls(dev, route_id=1, pickup="Federation Square,Melbourne",
-                  destination="Melbourne Airport", city="MEL", date="0101",
+    app = app_cls(dev, route_id=1, pickup="Times Square,New York",
+                  destination="JFK Airport", city="NYC", date="0101",
                   output_dir=str(output))
     print(app_cls.__name__, "OK" if app.get_info() else "FAILED")

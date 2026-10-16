@@ -30,8 +30,8 @@ CI runs `pytest` on every push (`.github/workflows/ci.yml`, Python 3.9/3.12).
 | `test_google_small_fallback` | Loose pattern `12 min away 5.2 km` fallback (FR-3.2) |
 | `test_search_price_discount_group` | Discounted price picked from two-price text (FR-3.2) |
 | `test_search_price_missing_decimal_point` | `"$2130"` → `21.3` OCR-glitch tolerance (NFR-2) |
-| `test_task_names` | `BOLT_MEL` / `SUN_DROPOFF` / `MEL` / `TIME_MEL` name parsing (FR-5, D1) |
-| `test_address_adapt` | State/city expansion incl. non-AU country suffix (FR-1.3) |
+| `test_task_names` | `BOLT_NYC` / `MIA_DROPOFF` / `NYC` / `TIME_NYC` name parsing (FR-5, D1) |
+| `test_address_adapt` | State/city expansion; all bundled cities are domestic, no country suffix (FR-1.3) |
 | `test_record_range` | Magic start values `400/404/900` hourly batching (FR-5.2) |
 
 Threshold: 100% pass; lint (`ruff E9+F`) must be clean in the same run.
@@ -77,10 +77,10 @@ USB disconnected mid-run retries once then exits non-zero.
 
 | # | Scenario | Expected |
 |---|----------|----------|
-| S1 | `BOLT_MEL` routes 1–20, capture+analyse | ≥ 95% complete screenshot sets; CSV has valid `price` for ≥ 95% of rows; success e-mail |
+| S1 | `BOLT_NYC` routes 1–20, capture+analyse | ≥ 95% complete screenshot sets; CSV has valid `price` for ≥ 95% of rows; success e-mail |
 | S2 | `--analyse` re-run on a second machine from the screenshots dir alone | Identical CSV values (FR acceptance #4) |
 | S3 | `--partial` with 3 ids | Only those ids captured and analysed |
-| S4 | `TIME_MEL` scheduled file | Routes recorded within their minute slots; no analysis CSV |
+| S4 | `TIME_NYC` scheduled file | Routes recorded within their minute slots; no analysis CSV |
 | S5 | All apps logged out | Abort ≤ 3 routes, failure e-mail, exit code 1, phone screen off |
 | S6 | `--capture-only` on machine without OCR | Capture completes; no analysis crash (FR-3.6) |
 

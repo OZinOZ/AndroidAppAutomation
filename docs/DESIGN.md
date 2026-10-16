@@ -48,8 +48,8 @@ One process owns one phone. The same process (or another one, with
 ## 3. Key design decisions
 
 ### D1 — Task names instead of per-run app lists
-`--city BOLT_MEL` encodes *which apps* (`BOLT` prefix) and *which route file*
-(`MEL`) in one token. `TASK_APPS` maps task keys to ordered app keys;
+`--city BOLT_NYC` encodes *which apps* (`BOLT` prefix) and *which route file*
+(`NYC`) in one token. `TASK_APPS` maps task keys to ordered app keys;
 `NO_ANALYSIS_TASKS` opts tasks out of OCR. Chosen over a CLI app list because
 it keeps the command short, is cron-friendly, and makes the route-file ↔
 app-set pairing explicit.
