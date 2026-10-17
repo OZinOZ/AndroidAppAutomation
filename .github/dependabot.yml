@@ -1,0 +1,22 @@
+versions:
+  # Python dependencies declared in pyproject.toml
+  - package-ecosystem: pip
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "deps"
+    groups:
+      python-deps:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+
+  # Keep the workflow actions themselves current
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: monthly
+    commit-message:
+      prefix: "ci"

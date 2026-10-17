@@ -2,7 +2,8 @@
 #
 # Runs on every push to `main` and every pull request:
 #   1. lint with ruff (syntax errors, undefined names, unused imports/variables);
-#   2. run the unit test suite with pytest (no device / OCR engine needed).
+#   2. run the unit test suite with coverage (no device / OCR engine needed);
+#   3. publish a coverage summary and keep the XML report as an artifact.
 #
 # The package is installed with `pip install -e ".[dev]"` so the tests run
 # against the installed package exactly like a user would get it.
@@ -39,8 +40,20 @@ jobs:
 
       - name: Lint with ruff (errors only)
         run: |
-          pip install ruff
           ruff check --select E9,F --no-cache src tests examples
 
       - name: Run tests with pytest
-        run: pytest -v
+        run: |
+          pytest -v --cov=appautomation --cov-report=term-missing --cov-report=xml
+
+      - name: Coverage summary
+        if: always()
+        run: python scripts/coverage_summary.py coverage.xml >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-python-${{ matrix.python-version }}
+          path: coverage.xml
+          if-no-files-found: ignore

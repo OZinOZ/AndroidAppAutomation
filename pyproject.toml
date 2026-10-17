@@ -4,11 +4,28 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "appautomation"
-version = "0.1.0"
+version = "2.1.0"
 description = "Android ride-hailing app automation (Bolt, inDrive, Google Maps) with OCR-based fare extraction."
 readme = "README.md"
 requires-python = ">=3.9"
 license = { text = "GPL-3.0-or-later" }
+keywords = [
+    "android", "automation", "uiautomator2", "adb", "ocr", "easyocr",
+    "ride-hailing", "fare-monitoring", "data-collection",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Testing",
+    "Topic :: Scientific/Engineering :: Image Recognition",
+]
 dependencies = [
     "uiautomator2>=3.0",
     "pandas>=1.5",
@@ -26,7 +43,13 @@ gmail = [
     "google-auth-httplib2",
     "google-auth-oauthlib",
 ]
-dev = ["pytest>=7"]
+dev = ["pytest>=7", "pytest-cov>=4", "ruff>=0.6"]
+
+[project.urls]
+Homepage = "https://github.com/OZinOZ/AndroidAppAutomation"
+Repository = "https://github.com/OZinOZ/AndroidAppAutomation"
+Issues = "https://github.com/OZinOZ/AndroidAppAutomation/issues"
+Changelog = "https://github.com/OZinOZ/AndroidAppAutomation/blob/main/CHANGELOG.md"
 
 [project.scripts]
 appautomation = "appautomation.cli:main"
@@ -37,3 +60,19 @@ where = ["src"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["src"]
+
+[tool.coverage.run]
+source = ["appautomation"]
+branch = true
+
+[tool.coverage.report]
+skip_empty = true
+exclude_lines = [
+    "pragma: no cover",
+    "if TYPE_CHECKING:",
+    "raise NotImplementedError",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"

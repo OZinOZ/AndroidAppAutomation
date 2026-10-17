@@ -1,0 +1,73 @@
+name: Bug report
+description: Something in the capture, OCR analysis, or report step does not work as documented.
+title: "[bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the report. Before filing, please check
+        [Troubleshooting](https://github.com/OZinOZ/AndroidAppAutomation#troubleshooting)
+        and the [Test plan](docs/TEST_PLAN.md) — most capture issues come from
+        a changed app UI or a screen profile that does not match the device.
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Capture (driver / device control)
+        - OCR analysis (cropping / extraction)
+        - Report generation
+        - CLI / configuration
+        - CI / packaging
+        - Documentation
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What did you expect, and what happened instead?
+      placeholder: |
+        Expected: route 12 records B and BI screenshots.
+        Actual: B is captured, BI is never written; log ends with "BOLT: Fare not found".
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. appautomation --phone phone_a --city BOLT_NYC --date 0000 --start 1 --end 20
+        2. ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Log excerpt
+      description: Last ~30 lines of `logs/<DATE>_<TASK>_<PHONE>.log`. Remove serials and e-mail addresses.
+      render: text
+
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, Python version, OCR engine, Android version, app version
+      placeholder: "Windows 11, Python 3.11, easyocr 1.7, Android 13, Bolt 1.x"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checklist
+      options:
+        - label: I removed secrets (serials, tokens, e-mail addresses) from logs and config snippets
+          required: true
+        - label: I searched existing issues for the same symptom
+          required: true

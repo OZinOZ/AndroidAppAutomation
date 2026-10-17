@@ -25,6 +25,14 @@ token.json
 workspace/
 screenshots/
 logs/
+reports/
 routes/*.csv
 !routes/example.csv
 ZZ_*.csv
+report_*.html
+
+# Test / coverage artifacts
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/

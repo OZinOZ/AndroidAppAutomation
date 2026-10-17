@@ -1,0 +1,22 @@
+# Local quality gates, run automatically on `git commit`.
+# Install once with:  pre-commit install
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.17.1
+    hooks:
+      - id: ruff
+        args: [--select, "E9,F", --fix]
+        files: ^(src|tests|examples|scripts)/
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: trailing-whitespace
+        exclude: \.md$
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-toml
+      - id: check-merge-conflict
+      - id: check-added-large-files
+        args: [--maxkb, "1024"]
+      - id: detect-private-key

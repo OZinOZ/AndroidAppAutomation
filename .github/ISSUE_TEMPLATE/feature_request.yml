@@ -1,0 +1,50 @@
+name: Feature request
+description: Suggest a new app driver, OCR improvement, or workflow capability.
+title: "[feature] "
+labels: ["enhancement"]
+body:
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Kind of change
+      options:
+        - New app driver
+        - New city / route handling
+        - OCR accuracy or engine support
+        - Reporting / output format
+        - Multi-device orchestration
+        - Developer experience (CI, packaging, docs)
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What can't you do today? Focus on the workflow, not the implementation.
+      placeholder: Recording the same route list on four phones currently means four manual runs.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: How would you like it to work? CLI shape, config keys, output files.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Workarounds you tried, and why they are not enough.
+
+  - type: checkboxes
+    id: scope
+    attributes:
+      label: Scope check
+      options:
+        - label: This stays within UI automation of apps on real devices (no private APIs, no emulator tricks)
+          required: true
+        - label: I checked the roadmap in docs/MULTI_DEVICE_PLAN.md and this is not already planned

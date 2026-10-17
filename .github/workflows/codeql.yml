@@ -1,0 +1,42 @@
+# Static analysis for Python (code scanning alerts land in the Security tab).
+# Runs on pushes, pull requests, and once a week so new CodeQL queries apply
+# to unchanged code.
+
+name: CodeQL
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: "23 4 * * 1"
+  workflow_dispatch:
+
+jobs:
+  analyze:
+    name: Analyze (${{ matrix.language }})
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      contents: read
+      actions: read
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [python]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+          queries: security-and-quality
+
+      - name: Perform CodeQL analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:${{ matrix.language }}"

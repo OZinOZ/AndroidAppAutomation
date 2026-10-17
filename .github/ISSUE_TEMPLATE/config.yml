@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Troubleshooting guide
+    url: https://github.com/OZinOZ/AndroidAppAutomation#troubleshooting
+    about: Device connection, OCR engine and pricing symptoms with fixes
+  - name: Design & test documents
+    url: https://github.com/OZinOZ/AndroidAppAutomation/tree/main/docs
+    about: Requirements, design decisions, test plan and the multi-device proposal
