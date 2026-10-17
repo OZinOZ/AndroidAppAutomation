@@ -83,6 +83,10 @@ time observations) for analysis and comparison across apps, cities and dates.
   only.
 * FR-3.6 `--analyse` runs OCR only, without touching a phone; on machines
   without any OCR engine, capture-only mode still works.
+* FR-3.7 `--report` renders one or more result CSVs into a single
+  self-contained HTML page (KPI cards, price-per-route chart, fee breakdown,
+  data-quality table, per-route rows) without a phone, an OCR engine or a
+  network connection; several CSVs additionally produce a comparison table.
 
 ### FR-4 Configuration & credentials
 * FR-4.1 All machine-specific values (serials, e-mail addresses, tool paths)
@@ -126,3 +130,5 @@ time observations) for analysis and comparison across apps, cities and dates.
    `MAX_FAIL_THRESHOLD` routes and sends a failure notification.
 4. `--analyse` on a second machine reproduces the same CSV from the
    screenshots directory alone.
+5. `--report <csv>` writes an HTML file that opens offline and shows the same
+   route count, priced share and mean fare as the CSV.

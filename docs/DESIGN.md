@@ -44,6 +44,7 @@ One process owns one phone. The same process (or another one, with
 | `analysis/analyser.py` | Batch: routes + screenshots → `ZZ_<CITY>_<DATE>.csv` |
 | `text_utils.py` | OCR text → numbers (`to_float`, `search_price`, Google info parsers) |
 | `notify.py` | Optional Gmail send (OAuth desktop flow, `token.json` cache) |
+| `report.py` | Result CSV(s) → self-contained HTML: KPIs, inline-SVG chart, fee means, data quality, comparison |
 
 ## 3. Key design decisions
 
@@ -98,6 +99,14 @@ Per-route exception → log + `False` + one retry → skip route; ≥ 3 consecut
 failures → notify + exit(1); app unusable → `AppNotReadyError` → notify +
 exit(1). `finish_task`-style exit always releases the phone (uiautomator
 reset, screen off). Random inter-route sleeps keep request patterns human-like.
+
+### D9 — Reports are static HTML, generated from the CSV only
+The report layer reads nothing but `ZZ_*.csv`, so it runs on any machine, in
+CI, or after the fact on archived data. Charts are inline SVG computed in
+Python rather than a JS library: the file stays a single artifact that can be
+e-mailed, committed, or opened with no network. Trade-off: no interactivity —
+accepted, because the report's job is to make a run inspectable, not to be a
+dashboard.
 
 ## 4. Data flow
 

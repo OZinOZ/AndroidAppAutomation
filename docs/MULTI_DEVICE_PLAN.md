@@ -84,7 +84,7 @@ Two splitting strategies cover the real use cases:
 | Worker | The unchanged v2 CLI run — no runner changes required for split-by-routes; split-by-app needs no changes either (each job is a normal task) |
 | Route partitioner | Static split (contiguous blocks) or dynamic work queue (SQLite/file-lock claim table: `claim WHERE phone=? AND status='pending'`) — dynamic mode is phase 3 |
 | Analysis scheduler | Queue of completed capture jobs; runs `--analyse` with a bounded worker pool (default 1) so EasyOCR memory stays flat |
-| Aggregator | Concatenate per-run CSVs into `ZZ_<CITY>_<DATE>.csv`; per-phone status table; one summary e-mail replacing N single-run e-mails |
+| Aggregator | Concatenate per-run CSVs into `ZZ_<CITY>_<DATE>.csv`; per-phone status table; one summary e-mail replacing N single-run e-mails; feed the merged file to `--report` for a cross-phone comparison page |
 | Watchdog | Worker heartbeat (log mtime); a worker silent > threshold is killed and its routes marked failed, not retried blindly |
 
 ## 5. Failure & isolation policy

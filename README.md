@@ -1,5 +1,10 @@
 # AppAutomation
 
+[![CI](https://github.com/OZinOZ/AndroidAppAutomation/actions/workflows/ci.yml/badge.svg)](https://github.com/OZinOZ/AndroidAppAutomation/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/OZinOZ/AndroidAppAutomation/actions/workflows/codeql.yml/badge.svg)](https://github.com/OZinOZ/AndroidAppAutomation/actions/workflows/codeql.yml)
+[![Python](https://img.shields.io/badge/python-3.9%20%7C%203.10%20%7C%203.11%20%7C%203.12-blue)](pyproject.toml)
+[![License: GPL v3](https://img.shields.io/badge/license-GPL--3.0--or--later-blue)](LICENSE)
+
 Automate Android ride-hailing apps (**Bolt**, **inDrive**) and **Google Maps** on real phones,
 capture fare screenshots for a list of routes, and extract prices, fees, distances and
 durations from those screenshots with OCR.
@@ -7,7 +12,8 @@ durations from those screenshots with OCR.
 * Drives the phone with [uiautomator2](https://github.com/openatx/uiautomator2) over ADB.
 * Reads routes (pickup → drop-off) from CSV files, for any number of cities and phones.
 * Extracts fares with a pluggable OCR back-end: EasyOCR, PaddleOCR or Tesseract.
-* Writes one result CSV per run and can notify you by e-mail (Gmail API) when a run ends.
+* Writes one result CSV per run, notifies you by e-mail (Gmail API), and renders the
+  result as a self-contained HTML report.
 
 > [!WARNING]
 > This tool automates third-party apps through the UI. Check the terms of service of the
@@ -25,13 +31,14 @@ durations from those screenshots with OCR.
 5. [Routes](#routes)
 6. [Usage](#usage)
 7. [Output](#output)
-8. [OCR engines](#ocr-engines)
-9. [E-mail notifications](#e-mail-notifications)
-10. [Examples](#examples)
-11. [Extending: add an app or a phone](#extending-add-an-app-or-a-phone)
-12. [Troubleshooting](#troubleshooting)
-13. [Security notes](#security-notes)
-14. [Development](#development)
+8. [HTML report](#html-report)
+9. [OCR engines](#ocr-engines)
+10. [E-mail notifications](#e-mail-notifications)
+11. [Examples](#examples)
+12. [Extending: add an app or a phone](#extending-add-an-app-or-a-phone)
+13. [Troubleshooting](#troubleshooting)
+14. [Security notes](#security-notes)
+15. [Development](#development)
 
 ---
 
@@ -66,7 +73,7 @@ flowchart LR
 ```
 AppAutomation/
 ├── src/appautomation/
-│   ├── cli.py            # command line entry point
+│   ├── cli.py            # command line entry point (capture / analyse / --report)
 │   ├── runner.py         # capture loop, retries, analysis hand-off
 │   ├── config.py         # YAML configuration (dataclasses)
 │   ├── constants.py      # cities, task->apps map, screen regions, fee labels
@@ -74,14 +81,19 @@ AppAutomation/
 │   ├── routes.py         # route CSV loading / filtering
 │   ├── device.py         # ADB / uiautomator2 connection, unlock
 │   ├── notify.py         # optional Gmail notifications
+│   ├── report.py         # result CSV -> self-contained HTML report
 │   ├── text_utils.py     # OCR text -> numbers
 │   ├── apps/             # one driver per app (base, bolt, indrive, google_maps)
 │   └── analysis/         # OCR engines, screenshot parser, batch analyser
-├── examples/             # runnable examples
+├── examples/             # runnable examples (01-04)
 ├── tests/                # unit tests (no phone / OCR needed)
+├── scripts/              # CI helpers (coverage summary)
 ├── routes/example.csv    # sample route list
 ├── config.example.yaml   # copy to config.yaml
 ├── credentials.example.json
+├── .github/              # CI, CodeQL, Dependabot, issue & PR templates
+├── CHANGELOG.md          # version history (Keep a Changelog)
+├── CONTRIBUTING.md       # setup, definition of done, how to add apps/cities
 └── docs/                 # GPU_SETUP, REQUIREMENTS, DESIGN, TEST_PLAN, MULTI_DEVICE_PLAN
 ```
 
@@ -94,6 +106,8 @@ AppAutomation/
 | [docs/TEST_PLAN.md](docs/TEST_PLAN.md) | Test plan: unit → OCR accuracy benchmark, device checklists, system scenarios, CI strategy |
 | [docs/MULTI_DEVICE_PLAN.md](docs/MULTI_DEVICE_PLAN.md) | Proposal: multi-phone / multi-app parallel operation (orchestrator, job definition, phased plan) |
 | [docs/GPU_SETUP.md](docs/GPU_SETUP.md) | EasyOCR GPU setup |
+| [CHANGELOG.md](CHANGELOG.md) | Version history, one section per release |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | Development workflow and definition of done |
 
 ## Installation
 
@@ -213,6 +227,25 @@ minute, kilo, booking, rateB, short, medium, long, rateT, rateD, valid, src, dst
 (`dist` in km, `trip` in minutes, from Google Maps; fee columns are filled when present on
 the breakdown screen).
 
+## HTML report
+
+Every result CSV can be turned into a single self-contained HTML page — no browser
+extensions, no network access, no JS framework:
+
+```bash
+# one run
+appautomation --report workspace/screenshots/0906_NYC_phone_a/ZZ_NYC_0906.csv
+
+# compare several runs (one row per file in the comparison table)
+appautomation --report run_a/ZZ_NYC_0906.csv run_b/ZZ_NYC_0906.csv -o compare.html
+```
+
+The report contains KPI cards (routes, priced share, mean/median fare, range), a
+price-per-route bar chart rendered as inline SVG, mean fee components, a data-quality
+table listing columns with missing values, the per-route table, and — when several CSVs
+are passed — a comparison table. Default output:
+`report_<csv stem>.html` next to the first CSV.
+
 ## OCR engines
 
 Install **one** of:
@@ -244,6 +277,7 @@ Without an `email:` block nothing is sent. `credentials.json` and `token.json` a
 | [`examples/01_text_parsing.py`](examples/01_text_parsing.py) | nothing | OCR text → price / distance / duration; address helpers |
 | [`examples/02_synthetic_analysis.py`](examples/02_synthetic_analysis.py) | an OCR engine | Full analysis on a generated fake Bolt screenshot |
 | [`examples/03_programmatic_capture.py`](examples/03_programmatic_capture.py) | a phone | Using the app drivers as a library |
+| [`examples/04_report.py`](examples/04_report.py) | nothing | Synthetic result CSV → HTML report |
 | [`examples/routes_scheduled.csv`](examples/routes_scheduled.csv) | – | Route file for `TIME_*` tasks |
 
 ```bash
@@ -300,9 +334,22 @@ Then register it in `apps/__init__.py` (`APP_REGISTRY`) and map a task to it in
 ## Development
 
 ```bash
-pip install -e ".[dev]"
-pytest
+pip install -e ".[dev]"                 # pytest, pytest-cov, ruff
+pre-commit install                      # optional: lint on every commit
+pytest                                  # 20 tests, no device / OCR needed
+pytest --cov=appautomation --cov-report=term-missing
+ruff check --select E9,F src tests examples
 ```
+
+CI runs the same commands on Python 3.9 and 3.12 for every push and pull request
+([`.github/workflows/ci.yml`](.github/workflows/ci.yml)), publishes a coverage summary,
+and keeps `coverage.xml` as an artifact. CodeQL runs alongside it
+([`.github/workflows/codeql.yml`](.github/workflows/codeql.yml)); Dependabot keeps
+dependencies and action versions current.
+
+Process documents worth reading before a change: [CONTRIBUTING.md](CONTRIBUTING.md)
+(definition of done), [docs/DESIGN.md](docs/DESIGN.md) (why the code looks like this),
+[docs/TEST_PLAN.md](docs/TEST_PLAN.md) (what is covered at which level).
 
 ## License
 

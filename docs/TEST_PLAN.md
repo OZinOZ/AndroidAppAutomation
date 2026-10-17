@@ -33,6 +33,14 @@ CI runs `pytest` on every push (`.github/workflows/ci.yml`, Python 3.9/3.12).
 | `test_task_names` | `BOLT_NYC` / `MIA_DROPOFF` / `NYC` / `TIME_NYC` name parsing (FR-5, D1) |
 | `test_address_adapt` | State/city expansion; all bundled cities are domestic, no country suffix (FR-1.3) |
 | `test_record_range` | Magic start values `400/404/900` hourly batching (FR-5.2) |
+| `test_summarise_price_statistics` | KPI math: priced share, mean/median/min/max, mean distance, fee mean, missing count (FR-3.7) |
+| `test_load_rows_reads_written_csv` | CSV reader round-trip (FR-3.7) |
+| `test_render_escapes_addresses_and_shows_values` | HTML escaping of addresses, prices rendered (FR-3.7) |
+| `test_render_multiple_datasets_adds_comparison` | Multi-file comparison table (FR-3.7) |
+| `test_render_empty_dataset_does_not_crash` | Empty run renders without error (NFR-2) |
+| `test_write_report_default_output_next_to_csv` | Default output path and file creation (FR-3.7) |
+| `test_write_report_rejects_missing_file` | Missing CSV → `FileNotFoundError` |
+| `test_cli_report_mode` | `--report` CLI path writes the HTML and prints the location (FR-3.7) |
 
 Threshold: 100% pass; lint (`ruff E9+F`) must be clean in the same run.
 
@@ -83,6 +91,8 @@ USB disconnected mid-run retries once then exits non-zero.
 | S4 | `TIME_NYC` scheduled file | Routes recorded within their minute slots; no analysis CSV |
 | S5 | All apps logged out | Abort ≤ 3 routes, failure e-mail, exit code 1, phone screen off |
 | S6 | `--capture-only` on machine without OCR | Capture completes; no analysis crash (FR-3.6) |
+| S7 | `--report` on the S1 CSV, offline | HTML shows same route count / priced share / mean fare; renders in a browser with no network (FR-3.7) |
+| S8 | `--report a.csv b.csv -o out.html` | Comparison table has one row per file; primary dataset drives the charts |
 
 ## 7. L5 — OCR accuracy benchmark
 
@@ -96,5 +106,12 @@ USB disconnected mid-run retries once then exits non-zero.
 ## 8. CI
 
 `.github/workflows/ci.yml`: push/PR to `main` → Python 3.9 & 3.12 matrix →
-`pip install -e ".[dev]"` → `ruff check --select E9,F` → `pytest -v`.
-L2/L5 join CI once implemented (they remain device-free).
+`pip install -e ".[dev]"` → `ruff check --select E9,F` →
+`pytest --cov=appautomation --cov-report=xml` → coverage summary in the job
+page and `coverage.xml` as an artifact. CodeQL runs on the same triggers
+(plus weekly). L2/L5 join CI once implemented (they remain device-free).
+
+Coverage currently sits near one third of statements: driver, device and OCR
+modules need hardware or an engine and are covered by the L3 checklist
+instead. The device-free modules the tests do target (`report`, `naming`,
+`text_utils`, `constants`) run at 78–100%.
